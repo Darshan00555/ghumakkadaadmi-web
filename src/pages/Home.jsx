@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { AnimatedFolder } from '@/components/ui/3d-folder';
+import { CircularGallery } from '@/components/ui/circular-gallery-2';
+import { RatingInteraction } from '@/components/ui/emoji-rating';
 import ScrollExpandMedia from '@/components/ui/scroll-expansion-hero';
 
 const Hero = ({ profileImage = '/LOGO.png' }) => {
@@ -53,64 +56,153 @@ const Hero = ({ profileImage = '/LOGO.png' }) => {
   );
 };
 
-const SectionLatest = ({ videos = [] }) => (
-  <section id="latest" className="bg-white py-16 text-gray-900">
-    <div className="mx-auto max-w-6xl px-6 lg:px-8">
-      <h2 className="mb-6 text-3xl font-bold">Latest Vlogs</h2>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {videos.length
-          ? videos.map((v) => (
-              <a
-                key={v.id}
-                href={v.url}
-                className="group block overflow-hidden rounded-lg shadow transition hover:shadow-lg"
-              >
-                <div className="aspect-video bg-gray-200">
-                  <img
-                    src={v.thumb}
-                    alt={v.title}
-                    className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                  />
-                </div>
-                <div className="bg-white p-4">
-                  <h3 className="font-semibold">{v.title}</h3>
-                  <p className="mt-1 text-sm text-gray-600">{v.excerpt}</p>
-                </div>
-              </a>
-            ))
-          : Array.from({ length: 3 }).map((_, i) => (
-              <div
-                key={i}
-                className="overflow-hidden rounded-lg border border-orange-100 bg-orange-50 p-4"
-              >
-                <div className="mb-3 aspect-video bg-orange-200" />
-                <div className="mb-2 h-6 w-3/4 rounded bg-orange-100" />
-                <div className="h-4 w-1/2 rounded bg-orange-100" />
-              </div>
-            ))}
-      </div>
-    </div>
-  </section>
-);
+const SectionLatest = ({ videos = [] }) => {
+  // Data for the folders
+  const latestProjects = videos.length
+    ? videos.map((v, index) => ({
+        id: v.id || `video-${index}`,
+        title: v.title,
+        image: v.thumb,
+      }))
+    : [
+        {
+          id: '1',
+          image:
+            'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2670&auto=format&fit=crop',
+          title: 'Switzerland Alps',
+        },
+        {
+          id: '2',
+          image:
+            'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2673&auto=format&fit=crop',
+          title: 'Paris Streets',
+        },
+        {
+          id: '3',
+          image:
+            'https://images.unsplash.com/photo-1499856831901-ccad28479522?q=80&w=2670&auto=format&fit=crop',
+          title: 'Venice Canals',
+        },
+      ];
 
-const GalleryPreview = () => (
-  <section id="gallery" className="bg-gray-50 py-16">
-    <div className="mx-auto max-w-6xl px-6 lg:px-8">
-      <h2 className="mb-6 text-3xl font-bold">Trip Gallery</h2>
-      <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-        {[
-          '/images/thumb1.jpg',
-          '/images/thumb2.jpg',
-          '/images/thumb3.jpg',
-          '/images/thumb4.jpg',
-          '/images/thumb5.jpg',
-          '/images/thumb6.jpg',
-        ].map((src, i) => (
-          <div key={i} className="h-48 overflow-hidden rounded-xl shadow">
-            <img src={src} alt={`thumb-${i}`} className="h-full w-full object-cover" />
-          </div>
-        ))}
+  const popularProjects = [
+    {
+      id: 'p1',
+      image:
+        'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=2694&auto=format&fit=crop',
+      title: 'Tokyo Nights',
+    },
+    {
+      id: 'p2',
+      image:
+        'https://images.unsplash.com/photo-1528629297340-d1d466945dc5?q=80&w=2675&auto=format&fit=crop',
+      title: 'Kyoto Temples',
+    },
+    {
+      id: 'p3',
+      image:
+        'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2670&auto=format&fit=crop',
+      title: 'Osaka Food',
+    },
+  ];
+
+  const upcomingProjects = [
+    {
+      id: 'u1',
+      image:
+        'https://images.unsplash.com/photo-1533929736458-ca588d08c8be?q=80&w=2670&auto=format&fit=crop',
+      title: 'London Calling',
+    },
+    {
+      id: 'u2',
+      image:
+        'https://images.unsplash.com/photo-1486299267070-83823f5448dd?q=80&w=2671&auto=format&fit=crop',
+      title: 'Scottish Highlands',
+    },
+    {
+      id: 'u3',
+      image:
+        'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=2670&auto=format&fit=crop',
+      title: 'Bath City',
+    },
+  ];
+
+  return (
+    <section id="latest" className="overflow-hidden bg-white py-16 text-gray-900">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <h2 className="mb-10 text-center text-3xl font-bold">Latest Vlogs</h2>
+        <div className="flex flex-col items-center justify-center gap-12 xl:flex-row">
+          {/* Left Folder */}
+          <AnimatedFolder title="Popular Series" projects={popularProjects} />
+
+          {/* Center Folder (Main) */}
+          <AnimatedFolder
+            title="Recent Adventures"
+            projects={latestProjects}
+            className="z-10 scale-110"
+          />
+
+          {/* Right Folder */}
+          <AnimatedFolder title="Coming Soon" projects={upcomingProjects} />
+        </div>
       </div>
+    </section>
+  );
+};
+
+const galleryItems = [
+  {
+    image:
+      'https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1000&auto=format&fit=crop',
+    text: 'Taj Mahal',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop',
+    text: 'Goa Beach',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1000&auto=format&fit=crop',
+    text: 'Himalayas',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1000&auto=format&fit=crop',
+    text: 'Mount Abu',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1593696140826-c58b5e6368d6?q=80&w=1000&auto=format&fit=crop',
+    text: 'Kerala',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=1000&auto=format&fit=crop',
+    text: 'Jaipur',
+  },
+];
+
+const GalleryPreview = () => {
+  return (
+    <section id="gallery" className="bg-gray-50 py-16 text-gray-900">
+      <div className="mx-auto max-w-7xl px-0 lg:px-8">
+        <h2 className="mb-6 px-6 text-center text-3xl font-bold">Trip Gallery</h2>
+        <div className="relative h-[600px] w-full overflow-hidden rounded-xl bg-white shadow-inner">
+          <CircularGallery items={galleryItems} bend={3} borderRadius={0.05} scrollEase={0.05} />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const SectionRating = () => (
+  <section className="border-t border-gray-100 bg-white py-12">
+    <div className="mx-auto flex flex-col items-center justify-center gap-6">
+      <p className="text-muted-foreground/60 text-xs font-medium tracking-[0.2em] uppercase">
+        How was your experience?
+      </p>
+      <RatingInteraction />
     </div>
   </section>
 );
@@ -128,11 +220,12 @@ export default function Home(props) {
         scrollToExpand="Scroll to Explore"
         textBlend={true}
       >
-        <div className="-mx-8 w-full md:-mx-16 lg:-mx-0">
+        <div className="-mx-8 w-full bg-white md:-mx-16 lg:-mx-0">
           {' '}
           {/* Negative margin to offset container padding if needed, or just let it be center aligned */}
           <SectionLatest videos={props.videos || []} />
           <GalleryPreview />
+          <SectionRating />
         </div>
       </ScrollExpandMedia>
     </main>
