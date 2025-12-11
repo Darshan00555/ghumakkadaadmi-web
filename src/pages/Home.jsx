@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { AnimatedFolder } from '@/components/ui/3d-folder';
+import { LeadCapturePage } from '@/components/ui/animated-characters-lead-capture';
 import { ArticleCard } from '@/components/ui/blog-post-card';
 import { CircularGallery } from '@/components/ui/circular-gallery-2';
 import TestimonialsEditorial from '@/components/ui/editorial-testimonial';
@@ -280,6 +281,20 @@ const SectionRating = () => (
 );
 
 export default function Home(props) {
+  const [showLeadCapture, setShowLeadCapture] = useState(() => {
+    const hasVisited = localStorage.getItem('hasVisited_v1');
+    return !hasVisited;
+  });
+
+  const handleLeadCaptureComplete = () => {
+    localStorage.setItem('hasVisited_v1', 'true');
+    setShowLeadCapture(false);
+  };
+
+  if (showLeadCapture) {
+    return <LeadCapturePage onComplete={handleLeadCaptureComplete} />;
+  }
+
   return (
     <main className="bg-background text-foreground min-h-screen font-sans antialiased">
       <ScrollExpandMedia
