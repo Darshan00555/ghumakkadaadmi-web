@@ -53,7 +53,7 @@ export function AnimatedFolder({ title, projects, className }: AnimatedFolderPro
       <div
         className={cn(
           'relative flex flex-col items-center justify-center',
-          'cursor-pointer rounded-2xl p-8',
+          'cursor-pointer rounded-xl p-4 sm:rounded-2xl sm:p-6 md:p-8',
           'bg-card border-border border',
           'transition-all duration-500 ease-out',
           'hover:shadow-accent/10 hover:shadow-2xl',
@@ -62,8 +62,8 @@ export function AnimatedFolder({ title, projects, className }: AnimatedFolderPro
           className
         )}
         style={{
-          minWidth: '280px',
-          minHeight: '320px',
+          minWidth: '240px',
+          minHeight: '280px',
           perspective: '1000px',
         }}
         onMouseEnter={() => setIsHovered(true)}

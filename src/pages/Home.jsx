@@ -10,13 +10,15 @@ import ScrollExpandMedia from '@/components/ui/scroll-expansion-hero';
 const Hero = ({ profileImage = '/LOGO.png' }) => {
   return (
     <section className="bg-gray-950 text-white">
-      <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 py-20 lg:grid-cols-2 lg:px-8 lg:py-24">
+      <div className="mx-auto grid max-w-6xl items-center gap-6 px-3 py-10 sm:px-6 sm:py-16 md:gap-10 md:py-20 lg:grid-cols-2 lg:px-8 lg:py-24">
         <div className="space-y-6">
-          <p className="text-sm tracking-[0.2em] text-slate-400 uppercase">Travel Vlogs • India</p>
-          <h1 className="text-4xl leading-tight font-extrabold lg:text-5xl">
+          <p className="text-xs tracking-[0.15em] text-slate-400 uppercase sm:text-sm sm:tracking-[0.2em]">
+            Travel Vlogs • India
+          </p>
+          <h1 className="text-2xl leading-tight font-extrabold sm:text-3xl md:text-4xl lg:text-5xl">
             Explore India <span className="text-orange-400">like a local.</span>
           </h1>
-          <p className="max-w-xl text-lg text-slate-300">
+          <p className="max-w-xl text-sm text-slate-300 sm:text-base md:text-lg">
             Temples, food, street walks and off-beat spots. Ghumakkad Aadmi takes you on trips that
             feel real – budgets, chaos and all.
           </p>
@@ -43,8 +45,8 @@ const Hero = ({ profileImage = '/LOGO.png' }) => {
 
         {/* Right: logo / hero visual */}
         <div className="flex justify-center lg:justify-end">
-          <div className="relative flex h-72 w-72 items-center justify-center rounded-3xl bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl lg:h-96 lg:w-96">
-            <div className="flex h-56 w-56 items-center justify-center rounded-2xl bg-slate-950/50 lg:h-72 lg:w-72">
+          <div className="relative flex h-48 w-48 items-center justify-center rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl sm:h-64 sm:w-64 sm:rounded-3xl md:h-72 md:w-72 lg:h-96 lg:w-96">
+            <div className="flex h-40 w-40 items-center justify-center rounded-xl bg-slate-950/50 sm:h-52 sm:w-52 sm:rounded-2xl md:h-56 md:w-56 lg:h-72 lg:w-72">
               <img
                 src={profileImage}
                 alt="Ghumakkad Aadmi"
@@ -69,20 +71,17 @@ const SectionLatest = ({ videos = [] }) => {
     : [
         {
           id: '1',
-          image:
-            'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2670&auto=format&fit=crop',
+          image: '/images/switzerland-alps.jpg',
           title: 'Switzerland Alps',
         },
         {
           id: '2',
-          image:
-            'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2673&auto=format&fit=crop',
+          image: '/images/paris-streets.jpg',
           title: 'Paris Streets',
         },
         {
           id: '3',
-          image:
-            'https://images.unsplash.com/photo-1499856831901-ccad28479522?q=80&w=2670&auto=format&fit=crop',
+          image: '/images/venice-canals.jpg',
           title: 'Venice Canals',
         },
       ];
@@ -90,20 +89,17 @@ const SectionLatest = ({ videos = [] }) => {
   const popularProjects = [
     {
       id: 'p1',
-      image:
-        'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=2694&auto=format&fit=crop',
+      image: '/images/tokyo-nights.jpg',
       title: 'Tokyo Nights',
     },
     {
       id: 'p2',
-      image:
-        'https://images.unsplash.com/photo-1528629297340-d1d466945dc5?q=80&w=2675&auto=format&fit=crop',
+      image: '/images/kyoto-temples.jpg',
       title: 'Kyoto Temples',
     },
     {
       id: 'p3',
-      image:
-        'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2670&auto=format&fit=crop',
+      image: '/images/osaka-food.jpg',
       title: 'Osaka Food',
     },
   ];
@@ -111,29 +107,31 @@ const SectionLatest = ({ videos = [] }) => {
   const upcomingProjects = [
     {
       id: 'u1',
-      image:
-        'https://images.unsplash.com/photo-1533929736458-ca588d08c8be?q=80&w=2670&auto=format&fit=crop',
+      image: '/images/london-calling.jpg',
       title: 'London Calling',
     },
     {
       id: 'u2',
-      image:
-        'https://images.unsplash.com/photo-1486299267070-83823f5448dd?q=80&w=2671&auto=format&fit=crop',
+      image: '/images/scottish-highlands.jpg',
       title: 'Scottish Highlands',
     },
     {
       id: 'u3',
-      image:
-        'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=2670&auto=format&fit=crop',
+      image: '/images/bath-city.jpg',
       title: 'Bath City',
     },
   ];
 
   return (
-    <section id="latest" className="bg-background text-foreground overflow-hidden py-16">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <h2 className="mb-10 text-center text-3xl font-bold">Latest Vlogs</h2>
-        <div className="flex flex-col items-center justify-center gap-12 xl:flex-row">
+    <section
+      id="latest"
+      className="bg-background text-foreground overflow-hidden py-8 sm:py-12 md:py-16"
+    >
+      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <h2 className="mb-6 text-center text-2xl font-bold sm:mb-8 sm:text-3xl md:mb-10">
+          Latest Vlogs
+        </h2>
+        <div className="flex w-full flex-col items-center justify-center gap-4 sm:gap-8 md:gap-12 xl:flex-row">
           {/* Left Folder */}
           <AnimatedFolder title="Popular Series" projects={popularProjects} />
 
@@ -141,7 +139,7 @@ const SectionLatest = ({ videos = [] }) => {
           <AnimatedFolder
             title="Recent Adventures"
             projects={latestProjects}
-            className="z-10 scale-110"
+            className="z-10 sm:scale-110"
           />
 
           {/* Right Folder */}
@@ -154,43 +152,39 @@ const SectionLatest = ({ videos = [] }) => {
 
 const galleryItems = [
   {
-    image:
-      'https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1000&auto=format&fit=crop',
+    image: '/images/taj-mahal.jpg',
     text: 'Taj Mahal',
   },
   {
-    image:
-      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop',
+    image: '/images/goa-beach.jpg',
     text: 'Goa Beach',
   },
   {
-    image:
-      'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1000&auto=format&fit=crop',
+    image: '/images/himalayas.jpg',
     text: 'Himalayas',
   },
   {
-    image:
-      'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1000&auto=format&fit=crop',
+    image: '/images/mount-abu.jpg',
     text: 'Mount Abu',
   },
   {
-    image:
-      'https://images.unsplash.com/photo-1593696140826-c58b5e6368d6?q=80&w=1000&auto=format&fit=crop',
+    image: '/images/kerala.jpg',
     text: 'Kerala',
   },
   {
-    image:
-      'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=1000&auto=format&fit=crop',
+    image: '/images/jaipur.jpg',
     text: 'Jaipur',
   },
 ];
 
 const GalleryPreview = () => {
   return (
-    <section id="gallery" className="bg-muted/30 text-foreground py-16">
-      <div className="mx-auto max-w-7xl px-0 lg:px-8">
-        <h2 className="mb-6 px-6 text-center text-3xl font-bold">Trip Gallery</h2>
-        <div className="bg-card relative h-[600px] w-full overflow-hidden rounded-xl shadow-inner">
+    <section id="gallery" className="bg-muted/30 text-foreground py-8 sm:py-12 md:py-16">
+      <div className="mx-auto max-w-7xl px-0 sm:px-4 lg:px-8">
+        <h2 className="mb-4 px-4 text-center text-2xl font-bold sm:mb-6 sm:px-6 sm:text-3xl">
+          Trip Gallery
+        </h2>
+        <div className="bg-card relative mx-auto h-[400px] w-full overflow-hidden rounded-none shadow-inner sm:h-[500px] sm:rounded-xl md:h-[600px]">
           <CircularGallery items={galleryItems} bend={3} borderRadius={0.05} scrollEase={0.05} />
         </div>
       </div>
@@ -203,8 +197,7 @@ const blogPosts = [
     headline: 'Hidden Gems of Himachal',
     excerpt:
       'Discover the untouched valleys and serene villages that often get missed by the regular tourist trail.',
-    cover:
-      'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1000&auto=format&fit=crop',
+    cover: '/images/himachal-gems.jpg',
     tag: 'Travel',
     readingTime: 300,
     writer: 'Amit Kumar',
@@ -213,8 +206,7 @@ const blogPosts = [
   {
     headline: 'Street Food of Old Delhi',
     excerpt: 'A culinary journey through the chaotic yet aromatic lanes of Chandni Chowk.',
-    cover:
-      'https://images.unsplash.com/photo-1587574293340-e0011c4e8ecf?q=80&w=1000&auto=format&fit=crop',
+    cover: '/images/delhi-food.jpg',
     tag: 'Food',
     readingTime: 420,
     writer: 'Priya Singh',
@@ -224,8 +216,7 @@ const blogPosts = [
     headline: 'Solo Trip to Goa?',
     excerpt:
       'Is Goa safe for solo travelers? Here is my experience and some tips for your first solo adventure.',
-    cover:
-      'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1000&auto=format&fit=crop',
+    cover: '/images/goa-solo.jpg',
     tag: 'Guide',
     readingTime: 360,
     writer: 'Rohan Das',
@@ -234,8 +225,7 @@ const blogPosts = [
   {
     headline: 'Temple Architecture of South India',
     excerpt: 'Exploring the intricate carvings and history of the Chola temples in Tamil Nadu.',
-    cover:
-      'https://images.unsplash.com/photo-1582510003544-4fe00b7416ce?q=80&w=1000&auto=format&fit=crop',
+    cover: '/images/temple-arch.jpg',
     tag: 'Heritage',
     readingTime: 540,
     writer: 'Anjali Rao',
@@ -244,8 +234,7 @@ const blogPosts = [
   {
     headline: 'Camping in Ladakh',
     excerpt: 'Under the starry skies of Pangong Lake: A night to remember.',
-    cover:
-      'https://images.unsplash.com/photo-1533519888939-f4722512f451?q=80&w=1000&auto=format&fit=crop',
+    cover: '/images/ladakh-camping.jpg',
     tag: 'Adventure',
     readingTime: 480,
     writer: 'Vikram Seth',
@@ -254,8 +243,7 @@ const blogPosts = [
   {
     headline: 'Banaras: The City of Lights',
     excerpt: 'Witnessing the Ganga Aarti and the spiritual vibe of Varanasi.',
-    cover:
-      'https://images.unsplash.com/photo-1561361513-35bdcd255aeb?q=80&w=1000&auto=format&fit=crop',
+    cover: '/images/banaras.jpg',
     tag: 'Culture',
     readingTime: 390,
     writer: 'Neha Gupta',
@@ -265,10 +253,12 @@ const blogPosts = [
 
 const SectionBlog = () => {
   return (
-    <section className="bg-background py-16">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <h2 className="text-foreground mb-10 text-center text-3xl font-bold">Travel Stories</h2>
-        <div className="grid grid-cols-1 justify-items-center gap-8 md:grid-cols-2 lg:grid-cols-3">
+    <section className="bg-background py-8 sm:py-12 md:py-16">
+      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <h2 className="text-foreground mb-6 text-center text-2xl font-bold sm:mb-8 sm:text-3xl md:mb-10">
+          Travel Stories
+        </h2>
+        <div className="grid grid-cols-1 justify-items-center gap-4 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
           {blogPosts.map((post, index) => (
             <ArticleCard key={index} {...post} />
           ))}
@@ -279,9 +269,9 @@ const SectionBlog = () => {
 };
 
 const SectionRating = () => (
-  <section className="border-border bg-background border-t py-12">
-    <div className="mx-auto flex flex-col items-center justify-center gap-6">
-      <p className="text-muted-foreground/60 text-xs font-medium tracking-[0.2em] uppercase">
+  <section className="border-border bg-background border-t py-8 sm:py-10 md:py-12">
+    <div className="mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:gap-6">
+      <p className="text-muted-foreground/60 text-center text-xs font-medium tracking-[0.15em] uppercase sm:text-sm sm:tracking-[0.2em]">
         How was your experience?
       </p>
       <RatingInteraction />

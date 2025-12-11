@@ -60,20 +60,20 @@ export default function TestimonialsEditorial() {
   const current = testimonials[active];
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-6 py-16">
+    <div className="mx-auto w-full max-w-2xl px-2 py-8 sm:px-6 sm:py-12 md:py-16">
       {/* Large index number */}
-      <div className="flex items-start gap-8">
+      <div className="flex items-start gap-4 sm:gap-6 md:gap-8">
         <span
-          className="text-foreground/10 text-[120px] leading-none font-light transition-all duration-500 select-none"
+          className="text-foreground/10 text-[60px] leading-none font-light transition-all duration-500 select-none sm:text-[80px] md:text-[100px] lg:text-[120px]"
           style={{ fontFeatureSettings: '"tnum"' }}
         >
           {String(active + 1).padStart(2, '0')}
         </span>
 
-        <div className="flex-1 pt-6">
+        <div className="flex-1 pt-2 sm:pt-4 md:pt-6">
           {/* Quote */}
           <blockquote
-            className={`text-foreground text-2xl leading-relaxed font-light tracking-tight transition-all duration-300 md:text-3xl ${
+            className={`text-foreground text-lg leading-relaxed font-light tracking-tight transition-all duration-300 sm:text-xl md:text-2xl lg:text-3xl ${
               isTransitioning ? 'translate-x-4 opacity-0' : 'translate-x-0 opacity-100'
             }`}
           >

@@ -46,24 +46,26 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
   const hasFooter = writer || publishedAt;
 
   return (
-    <Card className="border-border bg-card flex w-full max-w-sm flex-col gap-3 overflow-hidden rounded-3xl border p-3 shadow-lg transition-all hover:shadow-xl">
+    <Card className="border-border bg-card flex w-full max-w-sm flex-col gap-2 overflow-hidden rounded-2xl border p-2 shadow-lg transition-all hover:shadow-xl sm:gap-3 sm:rounded-3xl sm:p-3">
       {cover && (
         <CardHeader className="p-0">
-          <div className="relative h-56 w-full overflow-hidden rounded-2xl">
+          <div className="relative h-44 w-full overflow-hidden rounded-xl sm:h-52 sm:rounded-2xl md:h-56">
             <img
               src={cover}
               alt={headline}
+              loading="lazy"
+              decoding="async"
               className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
             />
           </div>
         </CardHeader>
       )}
 
-      <CardContent className="flex-grow p-3">
+      <CardContent className="flex-grow p-2 sm:p-3">
         {hasMeta && (
-          <div className="text-muted-foreground mb-4 flex items-center text-sm">
+          <div className="text-muted-foreground mb-3 flex items-center text-xs sm:mb-4 sm:text-sm">
             {tag && (
-              <Badge className="bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground rounded-full px-3 py-1 text-sm">
+              <Badge className="bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground rounded-full px-2 py-0.5 text-xs sm:px-3 sm:py-1 sm:text-sm">
                 {tag}
               </Badge>
             )}
@@ -72,10 +74,12 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
           </div>
         )}
 
-        <h2 className="text-card-foreground mb-2 text-2xl leading-tight font-bold">{headline}</h2>
+        <h2 className="text-card-foreground mb-2 text-lg leading-tight font-bold sm:text-xl md:text-2xl">
+          {headline}
+        </h2>
 
         <p
-          className={cn('text-muted-foreground', {
+          className={cn('text-muted-foreground text-sm sm:text-base', {
             '[display:-webkit-box] overflow-hidden text-ellipsis [-webkit-box-orient:vertical]':
               clampLines && clampLines > 0,
           })}
