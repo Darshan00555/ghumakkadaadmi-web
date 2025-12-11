@@ -1,7 +1,9 @@
 import React from 'react';
 
 import { AnimatedFolder } from '@/components/ui/3d-folder';
+import { ArticleCard } from '@/components/ui/blog-post-card';
 import { CircularGallery } from '@/components/ui/circular-gallery-2';
+import TestimonialsEditorial from '@/components/ui/editorial-testimonial';
 import { RatingInteraction } from '@/components/ui/emoji-rating';
 import ScrollExpandMedia from '@/components/ui/scroll-expansion-hero';
 
@@ -128,7 +130,7 @@ const SectionLatest = ({ videos = [] }) => {
   ];
 
   return (
-    <section id="latest" className="overflow-hidden bg-white py-16 text-gray-900">
+    <section id="latest" className="bg-background text-foreground overflow-hidden py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <h2 className="mb-10 text-center text-3xl font-bold">Latest Vlogs</h2>
         <div className="flex flex-col items-center justify-center gap-12 xl:flex-row">
@@ -185,10 +187,10 @@ const galleryItems = [
 
 const GalleryPreview = () => {
   return (
-    <section id="gallery" className="bg-gray-50 py-16 text-gray-900">
+    <section id="gallery" className="bg-muted/30 text-foreground py-16">
       <div className="mx-auto max-w-7xl px-0 lg:px-8">
         <h2 className="mb-6 px-6 text-center text-3xl font-bold">Trip Gallery</h2>
-        <div className="relative h-[600px] w-full overflow-hidden rounded-xl bg-white shadow-inner">
+        <div className="bg-card relative h-[600px] w-full overflow-hidden rounded-xl shadow-inner">
           <CircularGallery items={galleryItems} bend={3} borderRadius={0.05} scrollEase={0.05} />
         </div>
       </div>
@@ -196,8 +198,88 @@ const GalleryPreview = () => {
   );
 };
 
+const blogPosts = [
+  {
+    headline: 'Hidden Gems of Himachal',
+    excerpt:
+      'Discover the untouched valleys and serene villages that often get missed by the regular tourist trail.',
+    cover:
+      'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1000&auto=format&fit=crop',
+    tag: 'Travel',
+    readingTime: 300,
+    writer: 'Amit Kumar',
+    publishedAt: new Date('2024-03-15'),
+  },
+  {
+    headline: 'Street Food of Old Delhi',
+    excerpt: 'A culinary journey through the chaotic yet aromatic lanes of Chandni Chowk.',
+    cover:
+      'https://images.unsplash.com/photo-1587574293340-e0011c4e8ecf?q=80&w=1000&auto=format&fit=crop',
+    tag: 'Food',
+    readingTime: 420,
+    writer: 'Priya Singh',
+    publishedAt: new Date('2024-03-10'),
+  },
+  {
+    headline: 'Solo Trip to Goa?',
+    excerpt:
+      'Is Goa safe for solo travelers? Here is my experience and some tips for your first solo adventure.',
+    cover:
+      'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1000&auto=format&fit=crop',
+    tag: 'Guide',
+    readingTime: 360,
+    writer: 'Rohan Das',
+    publishedAt: new Date('2024-02-28'),
+  },
+  {
+    headline: 'Temple Architecture of South India',
+    excerpt: 'Exploring the intricate carvings and history of the Chola temples in Tamil Nadu.',
+    cover:
+      'https://images.unsplash.com/photo-1582510003544-4fe00b7416ce?q=80&w=1000&auto=format&fit=crop',
+    tag: 'Heritage',
+    readingTime: 540,
+    writer: 'Anjali Rao',
+    publishedAt: new Date('2024-02-15'),
+  },
+  {
+    headline: 'Camping in Ladakh',
+    excerpt: 'Under the starry skies of Pangong Lake: A night to remember.',
+    cover:
+      'https://images.unsplash.com/photo-1533519888939-f4722512f451?q=80&w=1000&auto=format&fit=crop',
+    tag: 'Adventure',
+    readingTime: 480,
+    writer: 'Vikram Seth',
+    publishedAt: new Date('2024-01-20'),
+  },
+  {
+    headline: 'Banaras: The City of Lights',
+    excerpt: 'Witnessing the Ganga Aarti and the spiritual vibe of Varanasi.',
+    cover:
+      'https://images.unsplash.com/photo-1561361513-35bdcd255aeb?q=80&w=1000&auto=format&fit=crop',
+    tag: 'Culture',
+    readingTime: 390,
+    writer: 'Neha Gupta',
+    publishedAt: new Date('2024-01-05'),
+  },
+];
+
+const SectionBlog = () => {
+  return (
+    <section className="bg-background py-16">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <h2 className="text-foreground mb-10 text-center text-3xl font-bold">Travel Stories</h2>
+        <div className="grid grid-cols-1 justify-items-center gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {blogPosts.map((post, index) => (
+            <ArticleCard key={index} {...post} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const SectionRating = () => (
-  <section className="border-t border-gray-100 bg-white py-12">
+  <section className="border-border bg-background border-t py-12">
     <div className="mx-auto flex flex-col items-center justify-center gap-6">
       <p className="text-muted-foreground/60 text-xs font-medium tracking-[0.2em] uppercase">
         How was your experience?
@@ -209,7 +291,7 @@ const SectionRating = () => (
 
 export default function Home(props) {
   return (
-    <main className="min-h-screen bg-gray-950 font-sans antialiased">
+    <main className="bg-background text-foreground min-h-screen font-sans antialiased">
       <ScrollExpandMedia
         mediaType="video"
         mediaSrc="/videos/hero-intro.mp4"
@@ -220,11 +302,13 @@ export default function Home(props) {
         scrollToExpand="Scroll to Explore"
         textBlend={true}
       >
-        <div className="-mx-8 w-full bg-white md:-mx-16 lg:-mx-0">
+        <div className="bg-background -mx-8 w-full md:-mx-16 lg:-mx-0">
           {' '}
           {/* Negative margin to offset container padding if needed, or just let it be center aligned */}
           <SectionLatest videos={props.videos || []} />
           <GalleryPreview />
+          <SectionBlog />
+          <TestimonialsEditorial />
           <SectionRating />
         </div>
       </ScrollExpandMedia>
