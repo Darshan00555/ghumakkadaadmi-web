@@ -8,10 +8,12 @@ import BlogLandingPage from './BlogLandingPage';
 import HomeLayout from './Layout/HomeLayout';
 import AboutPage from './pages/About';
 import DemoOne from './pages/DemoOne';
+import FAQs from './pages/FAQs';
 import Gallery from './pages/Gallery';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import ScrollHeroDemo from './pages/ScrollHeroDemo';
+import TermsAndConditions from './pages/TermsAndConditions';
 import TestPage from './pages/TestPage';
 import Vlogs from './pages/Vlogs';
 
@@ -30,6 +32,8 @@ const App = () => {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/vlogs" element={<Vlogs />} />
+            <Route path="/terms" element={<TermsAndConditions />} />
+            <Route path="/faqs" element={<FAQs />} />
             <Route
               path="/old-about"
               element={

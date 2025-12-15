@@ -300,8 +300,8 @@ export default function Home(props) {
       <ScrollExpandMedia
         mediaType="video"
         mediaSrc="/videos/hero-intro.mp4"
-        posterSrc="/hero-bg.png"
-        bgImageSrc="/hero-bg.png"
+        posterSrc="/hero-bg.jpg"
+        bgImageSrc="/hero-bg.jpg"
         title="Ghumakkad Aadmi"
         date="Travel Vlogs • India"
         scrollToExpand="Scroll to Explore"

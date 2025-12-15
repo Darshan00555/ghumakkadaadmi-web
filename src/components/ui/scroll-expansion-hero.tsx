@@ -28,29 +28,62 @@ const ScrollExpandMedia = ({
   children,
 }: ScrollExpandMediaProps) => {
   const [scrollProgress, setScrollProgress] = useState<number>(0);
+  const [targetProgress, setTargetProgress] = useState<number>(0);
   const [showContent, setShowContent] = useState<boolean>(false);
   const [mediaFullyExpanded, setMediaFullyExpanded] = useState<boolean>(false);
   const [touchStartY, setTouchStartY] = useState<number>(0);
   const [isMobileState, setIsMobileState] = useState<boolean>(false);
 
   const sectionRef = useRef<HTMLDivElement | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
+
+  // Smooth easing function
+  const easeOutCubic = (t: number): number => {
+    return 1 - Math.pow(1 - t, 3);
+  };
 
   useEffect(() => {
     setScrollProgress(0);
+    setTargetProgress(0);
     setShowContent(false);
     setMediaFullyExpanded(false);
   }, [mediaType]);
+
+  // Smooth interpolation animation loop
+  useEffect(() => {
+    const animate = () => {
+      setScrollProgress((current) => {
+        const diff = targetProgress - current;
+        if (Math.abs(diff) < 0.001) {
+          return targetProgress;
+        }
+        // Smooth interpolation - adjust 0.15 for faster/slower smoothing
+        return current + diff * 0.15;
+      });
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    animationFrameRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [targetProgress]);
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
       if (mediaFullyExpanded && e.deltaY < 0 && window.scrollY <= 5) {
         setMediaFullyExpanded(false);
+        setTargetProgress(0.95); // Smooth return
         e.preventDefault();
       } else if (!mediaFullyExpanded) {
         e.preventDefault();
-        const scrollDelta = e.deltaY * 0.0009;
-        const newProgress = Math.min(Math.max(scrollProgress + scrollDelta, 0), 1);
-        setScrollProgress(newProgress);
+        // Increased sensitivity for smoother feel (was 0.0009)
+        const scrollDelta = e.deltaY * 0.0015;
+        const newProgress = Math.min(Math.max(targetProgress + scrollDelta, 0), 1);
+        setTargetProgress(newProgress);
 
         if (newProgress >= 1) {
           setMediaFullyExpanded(true);
@@ -73,14 +106,15 @@ const ScrollExpandMedia = ({
 
       if (mediaFullyExpanded && deltaY < -20 && window.scrollY <= 5) {
         setMediaFullyExpanded(false);
+        setTargetProgress(0.95);
         e.preventDefault();
       } else if (!mediaFullyExpanded) {
         e.preventDefault();
-        // Increase sensitivity for mobile, especially when scrolling back
-        const scrollFactor = deltaY < 0 ? 0.012 : 0.01; // Increased by ~2x-2.5x for faster scroll (was 0.008/0.005)
+        // Smoother mobile scrolling
+        const scrollFactor = deltaY < 0 ? 0.015 : 0.012;
         const scrollDelta = deltaY * scrollFactor;
-        const newProgress = Math.min(Math.max(scrollProgress + scrollDelta, 0), 1);
-        setScrollProgress(newProgress);
+        const newProgress = Math.min(Math.max(targetProgress + scrollDelta, 0), 1);
+        setTargetProgress(newProgress);
 
         if (newProgress >= 1) {
           setMediaFullyExpanded(true);
@@ -122,7 +156,7 @@ const ScrollExpandMedia = ({
       window.removeEventListener('touchmove', handleTouchMove as unknown as EventListener);
       window.removeEventListener('touchend', handleTouchEnd as EventListener);
     };
-  }, [scrollProgress, mediaFullyExpanded, touchStartY]);
+  }, [targetProgress, mediaFullyExpanded, touchStartY]);
 
   useEffect(() => {
     const checkIfMobile = (): void => {
@@ -151,10 +185,11 @@ const ScrollExpandMedia = ({
       <section className="relative flex min-h-[100dvh] flex-col items-center justify-start">
         <div className="relative flex min-h-[100dvh] w-full flex-col items-center">
           <motion.div
-            className="absolute inset-0 z-0 h-full"
+            className="absolute inset-0 z-0"
+            style={{ height: '100vh', width: '100vw' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 - scrollProgress }}
-            transition={{ duration: 0.1 }}
+            transition={{ duration: 0 }}
           >
             <img
               src={bgImageSrc}
@@ -166,6 +201,8 @@ const ScrollExpandMedia = ({
               style={{
                 willChange: 'opacity',
                 imageRendering: 'crisp-edges',
+                minHeight: '100vh',
+                minWidth: '100vw',
               }}
             />
             <div className="absolute inset-0 bg-black/10" />
@@ -174,7 +211,7 @@ const ScrollExpandMedia = ({
           <div className="relative z-10 container mx-auto flex flex-col items-center justify-start">
             <div className="relative flex h-[100dvh] w-full flex-col items-center justify-center">
               <div
-                className="absolute top-1/2 left-1/2 z-0 -translate-x-1/2 -translate-y-1/2 transform rounded-2xl transition-none"
+                className="group absolute top-1/2 left-1/2 z-0 -translate-x-1/2 -translate-y-1/2 transform rounded-2xl transition-all duration-500 ease-out hover:scale-[1.02]"
                 style={{
                   width: `${mediaWidth}px`,
                   height: `${mediaHeight}px`,
@@ -183,6 +220,31 @@ const ScrollExpandMedia = ({
                   boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.3)',
                 }}
               >
+                {/* Corner Highlights */}
+                <div className="absolute -top-1 -left-1 h-8 w-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <div className="absolute top-0 left-0 h-full w-1 rounded-full bg-gradient-to-b from-orange-400 via-orange-300 to-transparent"></div>
+                  <div className="absolute top-0 left-0 h-1 w-full rounded-full bg-gradient-to-r from-orange-400 via-orange-300 to-transparent"></div>
+                  <div className="absolute top-0 left-0 h-3 w-3 rounded-full bg-orange-400 blur-sm"></div>
+                </div>
+                <div className="absolute -top-1 -right-1 h-8 w-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <div className="absolute top-0 right-0 h-full w-1 rounded-full bg-gradient-to-b from-orange-400 via-orange-300 to-transparent"></div>
+                  <div className="absolute top-0 right-0 h-1 w-full rounded-full bg-gradient-to-l from-orange-400 via-orange-300 to-transparent"></div>
+                  <div className="absolute top-0 right-0 h-3 w-3 rounded-full bg-orange-400 blur-sm"></div>
+                </div>
+                <div className="absolute -bottom-1 -left-1 h-8 w-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <div className="absolute bottom-0 left-0 h-full w-1 rounded-full bg-gradient-to-t from-orange-400 via-orange-300 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 h-1 w-full rounded-full bg-gradient-to-r from-orange-400 via-orange-300 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 h-3 w-3 rounded-full bg-orange-400 blur-sm"></div>
+                </div>
+                <div className="absolute -right-1 -bottom-1 h-8 w-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <div className="absolute right-0 bottom-0 h-full w-1 rounded-full bg-gradient-to-t from-orange-400 via-orange-300 to-transparent"></div>
+                  <div className="absolute right-0 bottom-0 h-1 w-full rounded-full bg-gradient-to-l from-orange-400 via-orange-300 to-transparent"></div>
+                  <div className="absolute right-0 bottom-0 h-3 w-3 rounded-full bg-orange-400 blur-sm"></div>
+                </div>
+
+                {/* Black Matte Border on Hover */}
+                <div className="absolute inset-0 rounded-2xl border-4 border-black/0 transition-all duration-500 group-hover:border-black/60 group-hover:shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]"></div>
+
                 {mediaType === 'video' ? (
                   mediaSrc.includes('youtube.com') ? (
                     <div className="pointer-events-none relative h-full w-full">
@@ -212,7 +274,7 @@ const ScrollExpandMedia = ({
                         className="absolute inset-0 rounded-xl bg-black/30"
                         initial={{ opacity: 0.7 }}
                         animate={{ opacity: 0.5 - scrollProgress * 0.3 }}
-                        transition={{ duration: 0.2 }}
+                        transition={{ duration: 0 }}
                       />
                     </div>
                   ) : (
@@ -255,7 +317,7 @@ const ScrollExpandMedia = ({
                       className="absolute inset-0 rounded-xl bg-black/50"
                       initial={{ opacity: 0.7 }}
                       animate={{ opacity: 0.7 - scrollProgress * 0.3 }}
-                      transition={{ duration: 0.2 }}
+                      transition={{ duration: 0 }}
                     />
                   </div>
                 )}
